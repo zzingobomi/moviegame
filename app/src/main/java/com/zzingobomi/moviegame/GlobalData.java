@@ -3,6 +3,14 @@ package com.zzingobomi.moviegame;
 /**
  * Created by JongChan on 2017-02-13.
  * MovieGame 의 모든 전역 설정 및 변수들을 여기에 선언합니다.
+ * 1. 동영상 FullScreen 재생
+ *
+ */
+
+/**
+ * 화면에 보여주는 방식은 처음에는 MainActivity 에서 하나의 VideoView 로 보여주자.
+ * 후에 가능하다면 더블 퍼버링 방식으로 FragmentActivity 를 이용해서 번갈아가며 보여주기 방식
+ * 으로 개선 가능하다면 개선
  */
 
  /**
