@@ -37,6 +37,6 @@ public class GlobalData
     public static final String fileName = "testvideo2.mp4";
 
 
-    public static final String dbName   = "moviegame.db";
-    public static final String tableName = "moviegame_item";
+    //public static final String dbName   = "moviegame.db";
+    //public static final String tableName = "moviegame_item";
 }

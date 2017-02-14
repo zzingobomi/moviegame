@@ -18,7 +18,7 @@ public class MainActivity extends Activity
     VideoView               mVideoView;
     MediaController         mMediaController;
 
-    DBHelper                mDBHelper;
+    DBManager               mDbManager;
 
 
     @Override
@@ -105,8 +105,11 @@ public class MainActivity extends Activity
 
     private void DBConnect()
     {
-        mDBHelper = new DBHelper(getApplicationContext(), GlobalData.dbName, null, 1);
+        mDbManager = new DBManager(getApplicationContext());
 
-        mDBHelper.getResult("Chapter_01");
+
+        //mDBHelper = new DBHelper(getApplicationContext(), GlobalData.dbName, null, 1);
+
+        //mDBHelper.getResult("Chapter_01");
     }
 }
