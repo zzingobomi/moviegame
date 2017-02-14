@@ -18,15 +18,7 @@ public class MainActivity extends Activity
     VideoView               mVideoView;
     MediaController         mMediaController;
 
-
-    // Test
-    String schema   = "http";
-    String ip       = "59.16.152.204";
-    String port     = "5005";
-    String id       = "testvideo";
-    String pw       = "info3775";
-    String dir      = "testvideo";
-    String fileName = "testvideo2.mp4";
+    DBHelper                mDBHelper;
 
 
     @Override
@@ -42,26 +34,16 @@ public class MainActivity extends Activity
         mMediaController = new MediaController(MainActivity.this);
         mVideoView.setMediaController(mMediaController);
 
+        // DB 에서 정보 가져오기
+        DBConnect();
+
         // 비디오 뷰 포커스 요청
         mVideoView.requestFocus();
 
-        Uri uri = Uri.parse(schema + "://" + ip + ":" + port + "/" + dir + "/" + fileName);
-        try
-        {
-            // http id, pw 인증
-            Method setVideoURIMetod = mVideoView.getClass().getMethod("setVideoURI", Uri.class, Map.class);
-            Map<String, String> header = new HashMap<String, String>(1);
-            final String cred = id + ":" + pw;
-            final String auth = "Basic " + Base64.encodeToString(cred.getBytes(), Base64.URL_SAFE|Base64.NO_WRAP);
-            header.put("Authorization", auth);
+        // 비디오 뷰 URI 설정
+        setVideoUriAutu();
 
-            // VideoView 에 Uri 설정
-            setVideoURIMetod.invoke(mVideoView, uri, header);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
 
         //동영상이 재생준비가 완료되었을때 호출되는 리스너
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
@@ -94,5 +76,37 @@ public class MainActivity extends Activity
     private void stopVideo()
     {
         mVideoView.pause();
+    }
+
+    private void setVideoUriAutu()
+    {
+        Uri uri = Uri.parse(GlobalData.schema + "://" +
+                GlobalData.ip + ":" +
+                GlobalData.port + "/" +
+                GlobalData.dir + "/" +
+                GlobalData.fileName);
+        try
+        {
+            // http id, pw 인증
+            Method setVideoURIMetod = mVideoView.getClass().getMethod("setVideoURI", Uri.class, Map.class);
+            Map<String, String> header = new HashMap<String, String>(1);
+            final String cred = GlobalData.id+ ":" + GlobalData.pw;
+            final String auth = "Basic " + Base64.encodeToString(cred.getBytes(), Base64.URL_SAFE|Base64.NO_WRAP);
+            header.put("Authorization", auth);
+
+            // VideoView 에 Uri 설정
+            setVideoURIMetod.invoke(mVideoView, uri, header);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void DBConnect()
+    {
+        mDBHelper = new DBHelper(getApplicationContext(), GlobalData.dbName, null, 1);
+
+        mDBHelper.getResult("Chapter_01");
     }
 }
