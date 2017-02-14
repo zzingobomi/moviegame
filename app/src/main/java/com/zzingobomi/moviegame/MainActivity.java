@@ -2,7 +2,10 @@ package com.zzingobomi.moviegame;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -79,6 +82,7 @@ public class MainActivity extends Activity
     }
 
     private void setVideoUriAutu()
+
     {
         Uri uri = Uri.parse(GlobalData.schema + "://" +
                 GlobalData.ip + ":" +
@@ -111,5 +115,31 @@ public class MainActivity extends Activity
         //mDBHelper = new DBHelper(getApplicationContext(), GlobalData.dbName, null, 1);
 
         //mDBHelper.getResult("Chapter_01");
+    }
+
+
+    // 네트워크에 연결되어 있는 상태인가
+    private boolean isConnected()
+    {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = (activeNetwork != null && activeNetwork.isConnectedOrConnecting());
+
+        return isConnected;
+    }
+
+    // 어떤 네트워크 타입인가
+    private int getNetworkType()
+    {
+        /*
+        ConnectivityManager.TYPE_MOBILE             // 3G or 4G
+        ConnectivityManager.TYPE_WIFI               // Wi-Fi
+        */
+
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork.getType();
     }
 }
