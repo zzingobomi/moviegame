@@ -35,7 +35,9 @@ public class DBHelper extends SQLiteOpenHelper
         {
             boolean bResult = isCheckDB(mContext);
             if(!bResult)
+            {
                 copyDB(mContext);
+            }
         }
         catch (Exception e)
         {
@@ -50,12 +52,13 @@ public class DBHelper extends SQLiteOpenHelper
 
     public void getResult(String filename)
     {
-        sqLiteDatabase = getReadableDatabase();
+        sqLiteDatabase = getWritableDatabase();
+
         String result = "";
 
-        String querySQL = "SELECT nextfile1 FROM " + GlobalData.dbName + " where filename=" + filename;
+        String querySQL = "SELECT * FROM " + GlobalData.tableName + " where filename='" + filename + "'";
         Cursor cursor = sqLiteDatabase.rawQuery(querySQL, null);
-        while (cursor.moveToNext())
+        if(cursor.moveToFirst())
         {
             result = cursor.getString(3);
         }
