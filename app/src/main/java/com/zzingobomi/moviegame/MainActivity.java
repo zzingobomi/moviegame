@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
@@ -111,7 +112,16 @@ public class MainActivity extends Activity
     {
         mDbManager = new DBManager(getApplicationContext());
 
-        mDbManager.getResult();
+        String nextfile1 = mDbManager.getNextfileFromFilename("Chapter_01", 1);
+        if(nextfile1 != null)
+        {
+            Log.d("MG", nextfile1);
+        }
+        String nextfile4 = mDbManager.getNextfileFromFilename("Chapter_01", 4);
+        if(nextfile4 == null)
+        {
+            Log.d("MG", "NULL");
+        }
     }
 
 

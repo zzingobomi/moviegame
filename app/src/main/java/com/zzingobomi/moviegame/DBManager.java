@@ -62,20 +62,53 @@ public class DBManager
         {
             e.printStackTrace();
         }
+
+        // 읽기 전용 DB 얻기
+        mDbController = mOpener.getReadableDatabase();
     }
 
+
+    public String getNextfileFromFilename(String curFilename, int nextFileNum)
+    {
+        String nextfile = "";
+
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        nextfile = result.getString(nextFileNum + GlobalData.nextFileColumn);
+
+        return nextfile;
+    }
+
+    public String getNextfileFromFileindex(int curFileIndex, int nextFileNum)
+    {
+        String nextfile = "";
+
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE index=" + curFileIndex;
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        nextfile = result.getString(nextFileNum + GlobalData.nextFileColumn);
+
+        return nextfile;
+    }
+
+
+
+    /*
     public void getResult()
     {
         mDbController = mOpener.getReadableDatabase();
 
+        // 만약 해당 컬럼에 값이 없다면 null 리턴
         // test
+        String nextfile = "";
+        String nextfile2 = "";
         Cursor result = mDbController.rawQuery("SELECT * FROM moviegame_item WHERE filename='Chapter_01'", null);
         result.moveToFirst();
-        String nextfile = result.getString(3);
-
-
-
+        nextfile = result.getString(3);
+        nextfile2 = result.getString(5);
     }
+    */
 
 
     // DB 가 있나 체크하기
@@ -137,44 +170,4 @@ public class DBManager
             e.printStackTrace();
         }
     }
-
-/*
-    public void dbOpen()
-    {
-        this.mDbController = mOpener.getWritableDatabase();
-    }
-
-    public void dbClose()
-    {
-        this.mDbController.close();
-    }
-
-    public void insertData(String aSql, ContactData aCData)
-    {
-        String[] sqlData = aCData.getCDataArray();
-        this.mDbController.execSQL(aSql, sqlData);
-    }
-
-    public void deleteData(String aSql, ContactData aCData)
-    {
-        String[] sqlData = {aCData.getPhoneNumber()};
-        this.mDbController.execSQL(aSql, sqlData);
-    }
-
-    public void selectAll(String aSql, ArrayList<ContactData> aCDataList)
-    {
-        Cursor results = this.mDbController.rawQuery(aSql, null);
-        results.moveToFirst();
-        while (!results.isAfterLast())
-        {
-            ContactData cData = new ContactData(
-                    results.getString(1),
-                    results.getString(2),
-                    results.getString(3));
-            aCDataList.add(cData);
-            results.moveToNext();
-        }
-        results.close();
-    }
-    */
 }
