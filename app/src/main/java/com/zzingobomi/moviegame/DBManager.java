@@ -2,6 +2,7 @@ package com.zzingobomi.moviegame;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -61,6 +62,19 @@ public class DBManager
         {
             e.printStackTrace();
         }
+    }
+
+    public void getResult()
+    {
+        mDbController = mOpener.getReadableDatabase();
+
+        // test
+        Cursor result = mDbController.rawQuery("SELECT * FROM moviegame_item WHERE filename='Chapter_01'", null);
+        result.moveToFirst();
+        String nextfile = result.getString(3);
+
+
+
     }
 
 

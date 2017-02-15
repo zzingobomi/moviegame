@@ -111,10 +111,7 @@ public class MainActivity extends Activity
     {
         mDbManager = new DBManager(getApplicationContext());
 
-
-        //mDBHelper = new DBHelper(getApplicationContext(), GlobalData.dbName, null, 1);
-
-        //mDBHelper.getResult("Chapter_01");
+        mDbManager.getResult();
     }
 
 
