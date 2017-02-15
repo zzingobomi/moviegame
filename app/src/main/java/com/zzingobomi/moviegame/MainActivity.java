@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
@@ -19,9 +18,15 @@ import java.util.Map;
 
 public class MainActivity extends Activity
 {
+    ///
+    /// 비디오 관련
+    ///
     VideoView               mVideoView;
     MediaController         mMediaController;
 
+    ///
+    /// DB 관련
+    ///
     DBManager               mDbManager;
 
 
@@ -112,16 +117,9 @@ public class MainActivity extends Activity
     {
         mDbManager = new DBManager(getApplicationContext());
 
-        String nextfile1 = mDbManager.getNextfileFromFilename("Chapter_01", 1);
-        if(nextfile1 != null)
-        {
-            Log.d("MG", nextfile1);
-        }
-        String nextfile4 = mDbManager.getNextfileFromFilename("Chapter_01", 4);
-        if(nextfile4 == null)
-        {
-            Log.d("MG", "NULL");
-        }
+        //String nextfile1 = mDbManager.getNextfileFromFilename("Chapter_01", 1);
+        //String nextfile4 = mDbManager.getNextfileFromFilename("Chapter_01", 4);
+        //mDbManager.isEndofStoryFile("Chapter_04");
     }
 
 

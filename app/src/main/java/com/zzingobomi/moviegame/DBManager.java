@@ -15,6 +15,8 @@ import java.io.InputStream;
 
 /**
  * Created by happy on 2017-02-14.
+ * moviegame.db 안의 내용을 함수를 통해 가져올 수 있습니다.
+ * 테이블은 moviegame_item 이며 안의 내용을 확인하기 위해서는 SQLiteBrowser 를 이용합니다.
  */
 
 public class DBManager
@@ -90,6 +92,18 @@ public class DBManager
         nextfile = result.getString(nextFileNum + GlobalData.nextFileColumn);
 
         return nextfile;
+    }
+
+    public boolean isEndofStoryFile(String curFilename)
+    {
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        int endOfStory = result.getInt(GlobalData.endofStoryColumn);
+        if(endOfStory != 0)
+            return true;
+        else
+            return false;
     }
 
 

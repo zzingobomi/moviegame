@@ -43,4 +43,5 @@ public class GlobalData
     /// DB 관련
     ///
     public static final int nextFileColumn      = 2;
+    public static final int endofStoryColumn    = 2;
 }
