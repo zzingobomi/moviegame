@@ -47,6 +47,11 @@ public class MovieGameItemManager
             }
         });
 
+        /* 어떻게 해당 position 에 위치했을때 함수를 호출할 것인가?
+         * Update 문 없나..
+         */
+        //mVideoView.getCurrentPosition();
+
         // 시작 영상 보여주기
         setVideoUriAutu( getFirstMovieGameItem() );
     }
