@@ -37,7 +37,8 @@ public class GlobalData
     public static final String id               = "testvideo";
     public static final String pw               = "info3775";
     public static final String dir              = "testvideo";
-    public static final String fileName         = "testvideo2.mp4";
+    public static final String fileExten        = ".mp4";
+    //public static final String fileName       = "testvideo2.mp4";
 
     ///
     /// DB 관련
