@@ -33,7 +33,6 @@ public class MovieGameItemManager
             @Override
             public void onPrepared(MediaPlayer mp)
             {
-                //Toast.makeText(getApplicationContext(), "onPrepared", Toast.LENGTH_SHORT).show();
                 playVideo();
             }
         });
@@ -44,7 +43,7 @@ public class MovieGameItemManager
             @Override
             public void onCompletion(MediaPlayer mp)
             {
-                //Toast.makeText(getApplicationContext(), "onCompletion", Toast.LENGTH_SHORT).show();
+                setVideoUriAutu( getNextMovieGameItem() );
             }
         });
 
@@ -55,8 +54,21 @@ public class MovieGameItemManager
     // 첫번째 재생할 MovieGameItem 가져오기
     private String getFirstMovieGameItem()
     {
+        // TODO: getFirstMovieGameItem
+
         String firstMovieGameItem = "Chapter_01";
         return firstMovieGameItem;
+    }
+
+    // 다음에 재생할 영상 가져오기
+    private String getNextMovieGameItem()
+    {
+        // TODO: getNextMovieGameItem
+
+
+
+        String nextMovieGameItem = "Chapter_02";
+        return nextMovieGameItem;
     }
 
     // VideoView 에 URI 설정하기
@@ -86,8 +98,6 @@ public class MovieGameItemManager
         }
     }
 
-
-
     private void playVideo()
     {
         mVideoView.seekTo(0);
@@ -98,14 +108,4 @@ public class MovieGameItemManager
     {
         mVideoView.pause();
     }
-
-
-
-
-
-
-
-
-
-
 }

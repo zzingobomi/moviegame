@@ -45,4 +45,17 @@ public class GlobalData
     ///
     public static final int nextFileColumn      = 2;
     public static final int endofStoryColumn    = 2;
+
+    ///
+    /// 버튼 타입 ( H - horizon, V - vertical, C - Cross )
+    ///
+    public enum BUTTON_TYPE
+    {
+        NONE,
+        BT_H_2,
+        BT_H_3,
+        BT_H_4,
+        BT_C_4,
+        MAX
+    }
 }
