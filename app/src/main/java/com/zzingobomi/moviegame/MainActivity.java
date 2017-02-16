@@ -3,18 +3,14 @@ package com.zzingobomi.moviegame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
+import android.view.LayoutInflater;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends Activity
 {
@@ -23,12 +19,18 @@ public class MainActivity extends Activity
     ///
     VideoView               mVideoView;
     MediaController         mMediaController;
+    MovieGameItemManager    mMovieGameItemManager;
+
 
     ///
     /// DB 관련
     ///
     DBManager               mDbManager;
 
+    ///
+    /// 시간 관련
+    ///
+    TimerUpdateManager      mTimerUpdateManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,75 +45,25 @@ public class MainActivity extends Activity
         mMediaController = new MediaController(MainActivity.this);
         mVideoView.setMediaController(mMediaController);
 
-        // DB 에서 정보 가져오기
+        // DB 에서 정보 가져오기 (가장 첫번째)
         DBConnect();
 
         // 비디오 뷰 포커스 요청
         mVideoView.requestFocus();
 
-        // 비디오 뷰 URI 설정
-        setVideoUriAutu();
+        // 무비게임 매니저 초기화 (두번째)
+        InitMovieGameManager();
 
+        // 타이머 Update 초기화 (세번째)
+        InitTimerUpdateManager();
 
-
-        //동영상이 재생준비가 완료되었을때 호출되는 리스너
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
-        {
-            @Override
-            public void onPrepared(MediaPlayer mp)
-            {
-                //Toast.makeText(getApplicationContext(), "onPrepared", Toast.LENGTH_SHORT).show();
-                playVideo();
-            }
-        });
-
-        // 동영상 재생이 완료되었을 때
-        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
-            @Override
-            public void onCompletion(MediaPlayer mp)
-            {
-                //Toast.makeText(getApplicationContext(), "onCompletion", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // TestCode
+        FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
+        frameLayout.addView(li);
     }
 
-    private void playVideo()
-    {
-        mVideoView.seekTo(0);
-        mVideoView.start();
-    }
-
-    private void stopVideo()
-    {
-        mVideoView.pause();
-    }
-
-    private void setVideoUriAutu()
-
-    {
-        Uri uri = Uri.parse(GlobalData.schema + "://" +
-                GlobalData.ip + ":" +
-                GlobalData.port + "/" +
-                GlobalData.dir + "/" +
-                GlobalData.fileName);
-        try
-        {
-            // http id, pw 인증
-            Method setVideoURIMetod = mVideoView.getClass().getMethod("setVideoURI", Uri.class, Map.class);
-            Map<String, String> header = new HashMap<String, String>(1);
-            final String cred = GlobalData.id+ ":" + GlobalData.pw;
-            final String auth = "Basic " + Base64.encodeToString(cred.getBytes(), Base64.URL_SAFE|Base64.NO_WRAP);
-            header.put("Authorization", auth);
-
-            // VideoView 에 Uri 설정
-            setVideoURIMetod.invoke(mVideoView, uri, header);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 
     private void DBConnect()
     {
@@ -122,7 +74,21 @@ public class MainActivity extends Activity
         //mDbManager.isEndofStoryFile("Chapter_04");
     }
 
+    private void InitMovieGameManager()
+    {
+        mMovieGameItemManager = new MovieGameItemManager(getApplicationContext(), mVideoView, mDbManager);
+        mMovieGameItemManager.initMovieGameManager();
+    }
 
+    private void InitTimerUpdateManager()
+    {
+        mTimerUpdateManager = new TimerUpdateManager(getApplicationContext(), mMovieGameItemManager);
+    }
+
+
+    ///
+    /// 네트워크 관련
+    ///
     // 네트워크에 연결되어 있는 상태인가
     private boolean isConnected()
     {

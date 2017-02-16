@@ -94,6 +94,23 @@ public class DBManager
         return nextfile;
     }
 
+    public String getStartofStoryFileName()
+    {
+        String startFileName = "";
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME;
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        if(!result.isAfterLast())
+        {
+            if(result.getInt(GlobalData.startofStoryColumn) == 1)
+            {
+                startFileName = result.getString(GlobalData.fileNameColumn);
+            }
+        }
+
+        return startFileName;
+    }
+
     public boolean isEndofStoryFile(String curFilename)
     {
         String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
@@ -104,6 +121,38 @@ public class DBManager
             return true;
         else
             return false;
+    }
+
+    public GlobalData.BUTTON_TYPE getButtonType(String curFilename)
+    {
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        int btnType = result.getInt(GlobalData.btnTypeColumn);
+        switch (btnType)
+        {
+            case 0:
+                return GlobalData.BUTTON_TYPE.NONE;
+            case 1:
+                return GlobalData.BUTTON_TYPE.BT_H_2;
+            case 2:
+                return GlobalData.BUTTON_TYPE.BT_H_3;
+            case 3:
+                return GlobalData.BUTTON_TYPE.BT_H_4;
+            case 4:
+                return GlobalData.BUTTON_TYPE.BT_C_4;
+            default:
+                return GlobalData.BUTTON_TYPE.NONE;
+        }
+    }
+
+    public float getButtonTime(String curFilename)
+    {
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        float fButtonTime = result.getFloat(GlobalData.buttonTimeColumn);
+        return fButtonTime;
     }
 
 
@@ -121,6 +170,8 @@ public class DBManager
         result.moveToFirst();
         nextfile = result.getString(3);
         nextfile2 = result.getString(5);
+
+        result.islastfile?
     }
     */
 

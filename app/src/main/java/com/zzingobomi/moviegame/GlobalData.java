@@ -37,11 +37,35 @@ public class GlobalData
     public static final String id               = "testvideo";
     public static final String pw               = "info3775";
     public static final String dir              = "testvideo";
-    public static final String fileName         = "testvideo2.mp4";
+    public static final String fileExten        = ".mp4";
+    //public static final String fileName       = "testvideo2.mp4";
 
     ///
     /// DB 관련
     ///
-    public static final int nextFileColumn      = 2;
-    public static final int endofStoryColumn    = 2;
+    public static final int fileIndexColumn     = 0;
+    public static final int fileNameColumn      = 1;
+    public static final int startofStoryColumn  = 2;
+    public static final int endofStoryColumn    = 3;
+    public static final int btnTypeColumn       = 4;
+    public static final int buttonTimeColumn    = 5;
+    public static final int nextFileColumn      = 6;
+
+    ///
+    /// Time Handler
+    ///
+    public static final int delayTime           = 200;      // 0.2초마다 한번
+
+    ///
+    /// 버튼 타입 ( H - horizon, V - vertical, C - Cross )
+    ///
+    public enum BUTTON_TYPE
+    {
+        NONE,
+        BT_H_2,
+        BT_H_3,
+        BT_H_4,
+        BT_C_4,
+        MAX
+    }
 }
