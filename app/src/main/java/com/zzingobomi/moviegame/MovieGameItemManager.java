@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.VideoView;
 
 import java.lang.reflect.Method;
@@ -49,11 +50,20 @@ public class MovieGameItemManager
 
         /* 어떻게 해당 position 에 위치했을때 함수를 호출할 것인가?
          * Update 문 없나..
+         * Android GameProgramming 에서는 어떻게 Update 처리? Handler 를 이용하나?
          */
         //mVideoView.getCurrentPosition();
 
         // 시작 영상 보여주기
         setVideoUriAutu( getFirstMovieGameItem() );
+    }
+
+    public void update()
+    {
+        if(mVideoView != null && mVideoView.isPlaying())
+        {
+            Log.i("TIME", "Update Playing");
+        }
     }
 
     // 첫번째 재생할 MovieGameItem 가져오기

@@ -47,6 +47,11 @@ public class GlobalData
     public static final int endofStoryColumn    = 2;
 
     ///
+    /// Time Handler
+    ///
+    public static final int delayTime           = 200;      // 0.2초마다 한번
+
+    ///
     /// 버튼 타입 ( H - horizon, V - vertical, C - Cross )
     ///
     public enum BUTTON_TYPE

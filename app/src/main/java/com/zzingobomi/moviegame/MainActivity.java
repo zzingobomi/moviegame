@@ -27,6 +27,10 @@ public class MainActivity extends Activity
     ///
     DBManager               mDbManager;
 
+    ///
+    /// 시간 관련
+    ///
+    TimerUpdateManager      mTimerUpdateManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +54,8 @@ public class MainActivity extends Activity
         // 무비게임 매니저 초기화
         InitMovieGameManager();
 
+        // 타이머 Update 초기화
+        InitTimerUpdateManager();
 
         // TestCode
         FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
@@ -72,6 +78,11 @@ public class MainActivity extends Activity
     {
         mMovieGameItemManager = new MovieGameItemManager(getApplicationContext(), mVideoView);
         mMovieGameItemManager.initMovieGameManager();
+    }
+
+    private void InitTimerUpdateManager()
+    {
+        mTimerUpdateManager = new TimerUpdateManager(getApplicationContext(), mMovieGameItemManager);
     }
 
 
