@@ -17,13 +17,15 @@ import java.util.Map;
 
 public class MovieGameItemManager
 {
-    Context mContext = null;
-    VideoView mVideoView = null;
+    Context         mContext        = null;
+    VideoView       mVideoView      = null;
+    DBManager       mDbManager      = null;
 
-    public MovieGameItemManager(Context aContext, VideoView aVideoView)
+    public MovieGameItemManager(Context aContext, VideoView aVideoView, DBManager aDbManager)
     {
         mContext = aContext;
         mVideoView = aVideoView;
+        mDbManager = aDbManager;
     }
 
     public void initMovieGameManager()
@@ -48,12 +50,6 @@ public class MovieGameItemManager
             }
         });
 
-        /* 어떻게 해당 position 에 위치했을때 함수를 호출할 것인가?
-         * Update 문 없나..
-         * Android GameProgramming 에서는 어떻게 Update 처리? Handler 를 이용하나?
-         */
-        //mVideoView.getCurrentPosition();
-
         // 시작 영상 보여주기
         setVideoUriAutu( getFirstMovieGameItem() );
     }
@@ -69,10 +65,7 @@ public class MovieGameItemManager
     // 첫번째 재생할 MovieGameItem 가져오기
     private String getFirstMovieGameItem()
     {
-        // TODO: getFirstMovieGameItem
-
-        String firstMovieGameItem = "Chapter_01";
-        return firstMovieGameItem;
+        return mDbManager.getStartofStoryFileName();
     }
 
     // 다음에 재생할 영상 가져오기

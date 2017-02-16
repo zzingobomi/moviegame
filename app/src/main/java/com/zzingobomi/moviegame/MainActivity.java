@@ -45,16 +45,16 @@ public class MainActivity extends Activity
         mMediaController = new MediaController(MainActivity.this);
         mVideoView.setMediaController(mMediaController);
 
-        // DB 에서 정보 가져오기
+        // DB 에서 정보 가져오기 (가장 첫번째)
         DBConnect();
 
         // 비디오 뷰 포커스 요청
         mVideoView.requestFocus();
 
-        // 무비게임 매니저 초기화
+        // 무비게임 매니저 초기화 (두번째)
         InitMovieGameManager();
 
-        // 타이머 Update 초기화
+        // 타이머 Update 초기화 (세번째)
         InitTimerUpdateManager();
 
         // TestCode
@@ -76,7 +76,7 @@ public class MainActivity extends Activity
 
     private void InitMovieGameManager()
     {
-        mMovieGameItemManager = new MovieGameItemManager(getApplicationContext(), mVideoView);
+        mMovieGameItemManager = new MovieGameItemManager(getApplicationContext(), mVideoView, mDbManager);
         mMovieGameItemManager.initMovieGameManager();
     }
 

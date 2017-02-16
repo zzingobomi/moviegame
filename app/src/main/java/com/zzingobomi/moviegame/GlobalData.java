@@ -43,11 +43,13 @@ public class GlobalData
     ///
     /// DB 관련
     ///
-    public static final int nextFileColumn      = 6;
+    public static final int fileIndexColumn     = 0;
+    public static final int fileNameColumn      = 1;
     public static final int startofStoryColumn  = 2;
     public static final int endofStoryColumn    = 3;
     public static final int btnTypeColumn       = 4;
     public static final int buttonTimeColumn    = 5;
+    public static final int nextFileColumn      = 6;
 
     ///
     /// Time Handler
