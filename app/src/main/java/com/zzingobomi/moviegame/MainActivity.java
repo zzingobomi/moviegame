@@ -6,6 +6,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
@@ -46,6 +49,13 @@ public class MainActivity extends Activity
 
         // 무비게임 매니저 초기화
         InitMovieGameManager();
+
+
+        // TestCode
+        FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
+        frameLayout.addView(li);
     }
 
 
