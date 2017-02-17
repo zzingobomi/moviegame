@@ -21,6 +21,8 @@ public class MovieGameItemManager
     VideoView       mVideoView      = null;
     DBManager       mDbManager      = null;
 
+    MovieGameItem   mCurMovieGameItem   = null;
+
     public MovieGameItemManager(Context aContext, VideoView aVideoView, DBManager aDbManager)
     {
         mContext = aContext;
@@ -46,12 +48,12 @@ public class MovieGameItemManager
             @Override
             public void onCompletion(MediaPlayer mp)
             {
-                setVideoUriAutu( getNextMovieGameItem() );
+                //setVideoUriAutu( getNextMovieGameItem() );
             }
         });
 
         // 시작 영상 보여주기
-        setVideoUriAutu( getFirstMovieGameItem() );
+        makeMovieGameItemAndSetUriAuth( getFirstMovieGameItem() );
     }
 
     public void update()
@@ -79,8 +81,30 @@ public class MovieGameItemManager
         return nextMovieGameItem;
     }
 
+    private void makeMovieGameItemAndSetUriAuth(String nextFileName)
+    {
+        // MovieGameItme 만들기
+        MovieGameItem tempMovieGameItem = new MovieGameItem(
+                mDbManager.getFileindexFromFilename(nextFileName),
+                nextFileName,
+                mDbManager.isStartofStoryFile(nextFileName),
+                mDbManager.isEndofStoryFile(nextFileName),
+                mDbManager.getButtonType(nextFileName),
+                mDbManager.getButtonTime(nextFileName),
+                mDbManager.getNextfileFromFilename(nextFileName, 1),
+                mDbManager.getNextfileFromFilename(nextFileName, 2),
+                mDbManager.getNextfileFromFilename(nextFileName, 3),
+                mDbManager.getNextfileFromFilename(nextFileName, 4)
+                );
+
+        mCurMovieGameItem = tempMovieGameItem;
+
+        // VideoView 에 URI 설정하기
+        setVideoUriAuth(nextFileName);
+    }
+
     // VideoView 에 URI 설정하기
-    public void setVideoUriAutu(String nextFileName)
+    public void setVideoUriAuth(String nextFileName)
     {
         Uri uri = Uri.parse(GlobalData.schema + "://" +
                 GlobalData.ip + ":" +
