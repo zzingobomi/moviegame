@@ -16,6 +16,12 @@ public class MovieGameItem
     private float                       mButtonTime;
     private String[]                    mNextfileNames;
 
+    // 유저가 무엇을 선택했는지 ( 0 은 아직 선택 안한 상태 )
+    private int                         mUserSelectIndex;
+
+    // UI가 만들어졌는지
+    private boolean                     mExgistButtonUi;
+
     public MovieGameItem(int mFileIndex, String mFileName, boolean mStartOfStory, boolean mEndOfStory, GlobalData.BUTTON_TYPE mBtnType, float mButtonTime,
                          String nextFile1, String nextFile2, String nextFile3, String nextFile4 )
     {
@@ -31,6 +37,9 @@ public class MovieGameItem
         this.mNextfileNames[1] = nextFile2;
         this.mNextfileNames[2] = nextFile3;
         this.mNextfileNames[3] = nextFile4;
+
+        mUserSelectIndex = 0;
+        mExgistButtonUi = false;
     }
 
     public int getFileIndex()
@@ -87,6 +96,31 @@ public class MovieGameItem
         this.mButtonTime = mButtonTime;
     }
 
+    public String getNextfileName(int nextIndex)
+    {
+        if(nextIndex < 1 || nextIndex > 4)
+            return null;
+
+        return this.mNextfileNames[nextIndex-1];
+    }
+
+    public int getUserSelectIndex()
+    {
+        return mUserSelectIndex;
+    }
+    public void setUserSelectIndex(int aSelectIndex)
+    {
+        this.mUserSelectIndex = aSelectIndex;
+    }
+
+    public boolean getExgistButtonUi()
+    {
+        return mExgistButtonUi;
+    }
+    public void setExgistButtonUi(boolean bExgist)
+    {
+        this.mExgistButtonUi = bExgist;
+    }
 
 
     /*

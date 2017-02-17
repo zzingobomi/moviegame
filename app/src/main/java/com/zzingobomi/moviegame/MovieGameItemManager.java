@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.VideoView;
 
 import java.lang.reflect.Method;
@@ -18,14 +17,17 @@ import java.util.Map;
 public class MovieGameItemManager
 {
     Context         mContext        = null;
+    MainActivity    mMainActivity   = null;
+
     VideoView       mVideoView      = null;
     DBManager       mDbManager      = null;
 
     MovieGameItem   mCurMovieGameItem   = null;
 
-    public MovieGameItemManager(Context aContext, VideoView aVideoView, DBManager aDbManager)
+    public MovieGameItemManager(Context aContext, MainActivity aActivity, VideoView aVideoView, DBManager aDbManager)
     {
         mContext = aContext;
+        mMainActivity = aActivity;
         mVideoView = aVideoView;
         mDbManager = aDbManager;
     }
@@ -38,7 +40,7 @@ public class MovieGameItemManager
             @Override
             public void onPrepared(MediaPlayer mp)
             {
-                playVideo();
+                onPreparedVideo();
             }
         });
 
@@ -48,7 +50,7 @@ public class MovieGameItemManager
             @Override
             public void onCompletion(MediaPlayer mp)
             {
-                //setVideoUriAutu( getNextMovieGameItem() );
+                onCompleteVideo();
             }
         });
 
@@ -56,11 +58,36 @@ public class MovieGameItemManager
         makeMovieGameItemAndSetUriAuth( getFirstMovieGameItem() );
     }
 
+    private void onPreparedVideo()
+    {
+        // TODO:
+
+        // 비디오 재생하기
+        playVideo();
+    }
+
+    private void onCompleteVideo()
+    {
+        // TODO:
+        // 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
+
+        // 기존 UI 삭제
+        mMainActivity.removeButtonLayout();
+
+        // 다음 재생 영상 셋팅하기
+        makeMovieGameItemAndSetUriAuth( getNextMovieGameItem() );
+    }
+
     public void update()
     {
         if(mVideoView != null && mVideoView.isPlaying())
         {
-            Log.i("TIME", "Update Playing");
+            // UI 만들 시간이 지났는지 확인 (UI 만들시간이 지났고 아직 UI가 없다면)
+            if( mCurMovieGameItem != null && (mVideoView.getCurrentPosition() > mCurMovieGameItem.getButtonTime() * 1000) &&!mCurMovieGameItem.getExgistButtonUi())
+            {
+                mMainActivity.addButtonLayout(mCurMovieGameItem.getBtnType());
+                mCurMovieGameItem.setExgistButtonUi(true);
+            }
         }
     }
 

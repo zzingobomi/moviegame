@@ -6,10 +6,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 public class MainActivity extends Activity
@@ -32,6 +34,13 @@ public class MainActivity extends Activity
     ///
     TimerUpdateManager      mTimerUpdateManager;
 
+    ///
+    /// 버튼 레이아웃 관련
+    ///
+    FrameLayout             mMainFrameLayout;
+    LayoutInflater          mMainLayoutInflater;
+    LinearLayout            mCurButtonLyaout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,6 +49,8 @@ public class MainActivity extends Activity
 
         // 레이아웃 위젯
         mVideoView = (VideoView)this.findViewById(R.id.videoview);
+        mMainFrameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
+        mMainLayoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 미디어 컨트롤러 추가
         mMediaController = new MediaController(MainActivity.this);
@@ -56,12 +67,6 @@ public class MainActivity extends Activity
 
         // 타이머 Update 초기화 (세번째)
         InitTimerUpdateManager();
-
-        // TestCode
-        FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
-        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
-        frameLayout.addView(li);
     }
 
 
@@ -76,7 +81,7 @@ public class MainActivity extends Activity
 
     private void InitMovieGameManager()
     {
-        mMovieGameItemManager = new MovieGameItemManager(getApplicationContext(), mVideoView, mDbManager);
+        mMovieGameItemManager = new MovieGameItemManager(getApplicationContext(), this, mVideoView, mDbManager);
         mMovieGameItemManager.initMovieGameManager();
     }
 
@@ -84,6 +89,48 @@ public class MainActivity extends Activity
     {
         mTimerUpdateManager = new TimerUpdateManager(getApplicationContext(), mMovieGameItemManager);
     }
+
+
+    public void addButtonLayout(GlobalData.BUTTON_TYPE btnType)
+    {
+        if(btnType == GlobalData.BUTTON_TYPE.BT_H_2)
+        {
+            mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            mMainFrameLayout.addView(mCurButtonLyaout);
+        }
+        else if(btnType == GlobalData.BUTTON_TYPE.BT_H_3)
+        {
+            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+        }
+        else if(btnType == GlobalData.BUTTON_TYPE.BT_H_4)
+        {
+            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+        }
+        else if(btnType == GlobalData.BUTTON_TYPE.BT_C_4)
+        {
+            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+        }
+        else
+        {
+            Log.e("addButtonLayout", "addButtonLayout type error");
+        }
+
+        // 인자로 버튼타입을?
+        // TestCode
+        //FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
+        //LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
+        //frameLayout.addView(li);
+        //frameLayout.remove
+
+        Toast.makeText(getApplicationContext(), "Make Button UI Time~~~", Toast.LENGTH_LONG).show();
+    }
+    public void removeButtonLayout()
+    {
+        mMainFrameLayout.removeView(mCurButtonLyaout);
+    }
+
+
 
 
     ///
