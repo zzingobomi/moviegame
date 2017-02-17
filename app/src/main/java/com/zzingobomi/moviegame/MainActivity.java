@@ -8,13 +8,14 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-public class MainActivity extends Activity
+public class MainActivity extends Activity implements View.OnClickListener
 {
     ///
     /// 비디오 관련
@@ -97,6 +98,11 @@ public class MainActivity extends Activity
         {
             mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
             mMainFrameLayout.addView(mCurButtonLyaout);
+
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_01);
+            btn1.setOnClickListener(this);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_02);
+            btn2.setOnClickListener(this);
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_3)
         {
@@ -115,23 +121,38 @@ public class MainActivity extends Activity
             Log.e("addButtonLayout", "addButtonLayout type error");
         }
 
-        // 인자로 버튼타입을?
         // TestCode
         //FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
         //LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
         //frameLayout.addView(li);
-        //frameLayout.remove
 
-        Toast.makeText(getApplicationContext(), "Make Button UI Time~~~", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Make Button UI Time~~~", Toast.LENGTH_LONG).show();
     }
     public void removeButtonLayout()
     {
         mMainFrameLayout.removeView(mCurButtonLyaout);
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        mMovieGameItemManager.onClickButton(v);
 
-
+        /*
+        switch (v.getId())
+        {
+            case R.id.button_01:
+                Log.i("Button", "01Click1");
+                break;
+            case R.id.button_02:
+                Log.i("Button", "01Click2");
+                break;
+            default:
+                break;
+        }
+        */
+    }
 
     ///
     /// 네트워크 관련
@@ -159,5 +180,14 @@ public class MainActivity extends Activity
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
         return activeNetwork.getType();
+    }
+
+    ///
+    /// 게임이 끝날을 때
+    ///
+    public void GameEnd()
+    {
+        // 자원 정리
+        // TODO:
     }
 }

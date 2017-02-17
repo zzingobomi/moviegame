@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
+import android.view.View;
 import android.widget.VideoView;
 
 import java.lang.reflect.Method;
@@ -69,12 +71,18 @@ public class MovieGameItemManager
     private void onCompleteVideo()
     {
         // TODO:
-        // 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
+        // 1. 마지막 영상인가?
+        if(mCurMovieGameItem.isEndOfStory())
+        {
+            gameEndManager();
+        }
 
-        // 기존 UI 삭제
+        // 2. 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
+
+        // 3. 기존 UI 삭제
         mMainActivity.removeButtonLayout();
 
-        // 다음 재생 영상 셋팅하기
+        // 4. 다음 재생 영상 셋팅하기
         makeMovieGameItemAndSetUriAuth( getNextMovieGameItem() );
     }
 
@@ -88,6 +96,21 @@ public class MovieGameItemManager
                 mMainActivity.addButtonLayout(mCurMovieGameItem.getBtnType());
                 mCurMovieGameItem.setExgistButtonUi(true);
             }
+        }
+    }
+
+    public void onClickButton(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.button_01:
+                Log.i("Button", "01Click1");
+                break;
+            case R.id.button_02:
+                Log.i("Button", "01Click2");
+                break;
+            default:
+                break;
         }
     }
 
@@ -166,5 +189,14 @@ public class MovieGameItemManager
     private void stopVideo()
     {
         mVideoView.pause();
+    }
+
+    private void gameEndManager()
+    {
+        // 자원 정리
+        // TODO:
+
+        // 앱 종료
+        mMainActivity.GameEnd();
     }
 }
