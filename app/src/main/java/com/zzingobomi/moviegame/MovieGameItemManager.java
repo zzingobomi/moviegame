@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.VideoView;
 
 import java.lang.reflect.Method;
@@ -18,12 +19,17 @@ import java.util.Map;
 public class MovieGameItemManager
 {
     Context         mContext        = null;
+    MainActivity    mMainActivity   = null;
+
     VideoView       mVideoView      = null;
     DBManager       mDbManager      = null;
 
-    public MovieGameItemManager(Context aContext, VideoView aVideoView, DBManager aDbManager)
+    MovieGameItem   mCurMovieGameItem   = null;
+
+    public MovieGameItemManager(Context aContext, MainActivity aActivity, VideoView aVideoView, DBManager aDbManager)
     {
         mContext = aContext;
+        mMainActivity = aActivity;
         mVideoView = aVideoView;
         mDbManager = aDbManager;
     }
@@ -36,7 +42,7 @@ public class MovieGameItemManager
             @Override
             public void onPrepared(MediaPlayer mp)
             {
-                playVideo();
+                onPreparedVideo();
             }
         });
 
@@ -46,19 +52,65 @@ public class MovieGameItemManager
             @Override
             public void onCompletion(MediaPlayer mp)
             {
-                setVideoUriAutu( getNextMovieGameItem() );
+                onCompleteVideo();
             }
         });
 
         // 시작 영상 보여주기
-        setVideoUriAutu( getFirstMovieGameItem() );
+        makeMovieGameItemAndSetUriAuth( getFirstMovieGameItem() );
+    }
+
+    private void onPreparedVideo()
+    {
+        // TODO:
+
+        // 비디오 재생하기
+        playVideo();
+    }
+
+    private void onCompleteVideo()
+    {
+        // TODO:
+        // 1. 마지막 영상인가?
+        if(mCurMovieGameItem.isEndOfStory())
+        {
+            gameEndManager();
+        }
+
+        // 2. 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
+
+        // 3. 기존 UI 삭제
+        mMainActivity.removeButtonLayout();
+
+        // 4. 다음 재생 영상 셋팅하기
+        makeMovieGameItemAndSetUriAuth( getNextMovieGameItem() );
     }
 
     public void update()
     {
         if(mVideoView != null && mVideoView.isPlaying())
         {
-            Log.i("TIME", "Update Playing");
+            // UI 만들 시간이 지났는지 확인 (UI 만들시간이 지났고 아직 UI가 없다면)
+            if( mCurMovieGameItem != null && (mVideoView.getCurrentPosition() > mCurMovieGameItem.getButtonTime() * 1000) &&!mCurMovieGameItem.getExgistButtonUi())
+            {
+                mMainActivity.addButtonLayout(mCurMovieGameItem.getBtnType());
+                mCurMovieGameItem.setExgistButtonUi(true);
+            }
+        }
+    }
+
+    public void onClickButton(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.button_01:
+                Log.i("Button", "01Click1");
+                break;
+            case R.id.button_02:
+                Log.i("Button", "01Click2");
+                break;
+            default:
+                break;
         }
     }
 
@@ -79,8 +131,30 @@ public class MovieGameItemManager
         return nextMovieGameItem;
     }
 
+    private void makeMovieGameItemAndSetUriAuth(String nextFileName)
+    {
+        // MovieGameItme 만들기
+        MovieGameItem tempMovieGameItem = new MovieGameItem(
+                mDbManager.getFileindexFromFilename(nextFileName),
+                nextFileName,
+                mDbManager.isStartofStoryFile(nextFileName),
+                mDbManager.isEndofStoryFile(nextFileName),
+                mDbManager.getButtonType(nextFileName),
+                mDbManager.getButtonTime(nextFileName),
+                mDbManager.getNextfileFromFilename(nextFileName, 1),
+                mDbManager.getNextfileFromFilename(nextFileName, 2),
+                mDbManager.getNextfileFromFilename(nextFileName, 3),
+                mDbManager.getNextfileFromFilename(nextFileName, 4)
+                );
+
+        mCurMovieGameItem = tempMovieGameItem;
+
+        // VideoView 에 URI 설정하기
+        setVideoUriAuth(nextFileName);
+    }
+
     // VideoView 에 URI 설정하기
-    public void setVideoUriAutu(String nextFileName)
+    public void setVideoUriAuth(String nextFileName)
     {
         Uri uri = Uri.parse(GlobalData.schema + "://" +
                 GlobalData.ip + ":" +
@@ -115,5 +189,14 @@ public class MovieGameItemManager
     private void stopVideo()
     {
         mVideoView.pause();
+    }
+
+    private void gameEndManager()
+    {
+        // 자원 정리
+        // TODO:
+
+        // 앱 종료
+        mMainActivity.GameEnd();
     }
 }

@@ -69,6 +69,17 @@ public class DBManager
         mDbController = mOpener.getReadableDatabase();
     }
 
+    public int getFileindexFromFilename(String curFilename)
+    {
+        int fileIndex = 0;
+
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        fileIndex = result.getInt(GlobalData.fileIndexColumn);
+
+        return fileIndex;
+    }
 
     public String getNextfileFromFilename(String curFilename, int nextFileNum)
     {
@@ -109,6 +120,18 @@ public class DBManager
         }
 
         return startFileName;
+    }
+
+    public boolean isStartofStoryFile(String curFilename)
+    {
+        String querySQL = "SELECT * FROM " + DB_TABLE_NAME + " WHERE filename='" + curFilename + "'";
+        Cursor result = mDbController.rawQuery(querySQL, null);
+        result.moveToFirst();
+        int startOfStory = result.getInt(GlobalData.startofStoryColumn);
+        if(startOfStory != 0)
+            return true;
+        else
+            return false;
     }
 
     public boolean isEndofStoryFile(String curFilename)

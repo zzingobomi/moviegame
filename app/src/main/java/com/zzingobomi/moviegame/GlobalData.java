@@ -49,7 +49,7 @@ public class GlobalData
     public static final int endofStoryColumn    = 3;
     public static final int btnTypeColumn       = 4;
     public static final int buttonTimeColumn    = 5;
-    public static final int nextFileColumn      = 6;
+    public static final int nextFileColumn      = 5;
 
     ///
     /// Time Handler
