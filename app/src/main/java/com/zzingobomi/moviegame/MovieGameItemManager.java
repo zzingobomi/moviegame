@@ -108,12 +108,39 @@ public class MovieGameItemManager
     {
         switch (v.getId())
         {
-            case R.id.button_01:
+            // ButtonType_H_2
+            case R.id.button_h_2_1:
                 mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
                 break;
-            case R.id.button_02:
+            case R.id.button_h_2_2:
                 mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 2);
                 break;
+
+            // ButtonType_H_3
+            case R.id.button_h_3_1:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
+                break;
+            case R.id.button_h_3_2:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 2);
+                break;
+            case R.id.button_h_3_3:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 3);
+                break;
+
+            // ButtonType_H_4
+            case R.id.button_h_4_1:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
+                break;
+            case R.id.button_h_4_2:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 2);
+                break;
+            case R.id.button_h_4_3:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 3);
+                break;
+            case R.id.button_h_4_4:
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 4);
+                break;
+
             default:
                 break;
         }

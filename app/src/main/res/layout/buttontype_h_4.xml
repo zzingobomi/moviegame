@@ -3,10 +3,10 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="0dp"
-    android:id="@+id/buttontype_h_2">
+    android:id="@+id/buttontype_h_4">
     
     <Button
-        android:id="@+id/button_h_2_1"
+        android:id="@+id/button_h_4_1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -15,12 +15,30 @@
         />
 
     <Button
-        android:id="@+id/button_h_2_2"
+        android:id="@+id/button_h_4_2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#2200ff00"
         android:text="button_02"
+        />
+
+    <Button
+        android:id="@+id/button_h_4_3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#220000ff"
+        android:text="button_03"
+        />
+
+    <Button
+        android:id="@+id/button_h_4_4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#22ff00ff"
+        android:text="button_04"
         />
 
 </LinearLayout>

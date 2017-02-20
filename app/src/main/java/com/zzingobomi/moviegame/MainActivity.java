@@ -99,22 +99,40 @@ public class MainActivity extends Activity implements View.OnClickListener
             mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
             mMainFrameLayout.addView(mCurButtonLyaout);
 
-            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_01);
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_2_1);
             btn1.setOnClickListener(this);
-            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_02);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_2_2);
             btn2.setOnClickListener(this);
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_3)
         {
-            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_3, null);
+            mMainFrameLayout.addView(mCurButtonLyaout);
+
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_1);
+            btn1.setOnClickListener(this);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_2);
+            btn2.setOnClickListener(this);
+            Button btn3 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_3);
+            btn3.setOnClickListener(this);
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_4)
         {
-            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_4, null);
+            mMainFrameLayout.addView(mCurButtonLyaout);
+
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_1);
+            btn1.setOnClickListener(this);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_2);
+            btn2.setOnClickListener(this);
+            Button btn3 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_3);
+            btn3.setOnClickListener(this);
+            Button btn4 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_4);
+            btn4.setOnClickListener(this);
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_C_4)
         {
-            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_C_4, null);
         }
         else
         {
@@ -138,20 +156,6 @@ public class MainActivity extends Activity implements View.OnClickListener
     public void onClick(View v)
     {
         mMovieGameItemManager.onClickButton(v);
-
-        /*
-        switch (v.getId())
-        {
-            case R.id.button_01:
-                Log.i("Button", "01Click1");
-                break;
-            case R.id.button_02:
-                Log.i("Button", "01Click2");
-                break;
-            default:
-                break;
-        }
-        */
     }
 
     ///
