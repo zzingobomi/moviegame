@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.VideoView;
 
@@ -18,13 +17,15 @@ import java.util.Map;
 
 public class MovieGameItemManager
 {
-    Context         mContext        = null;
-    MainActivity    mMainActivity   = null;
+    private Context         mContext        = null;
+    private MainActivity    mMainActivity   = null;
 
-    VideoView       mVideoView      = null;
-    DBManager       mDbManager      = null;
+    private VideoView       mVideoView      = null;
+    private DBManager       mDbManager      = null;
 
-    MovieGameItem   mCurMovieGameItem   = null;
+    private MovieGameItem   mCurMovieGameItem   = null;
+
+    private String          mUserSelectNextfileName = null;
 
     public MovieGameItemManager(Context aContext, MainActivity aActivity, VideoView aVideoView, DBManager aDbManager)
     {
@@ -62,7 +63,7 @@ public class MovieGameItemManager
 
     private void onPreparedVideo()
     {
-        // TODO:
+        mUserSelectNextfileName = null;
 
         // 비디오 재생하기
         playVideo();
@@ -70,7 +71,6 @@ public class MovieGameItemManager
 
     private void onCompleteVideo()
     {
-        // TODO:
         // 1. 마지막 영상인가?
         if(mCurMovieGameItem.isEndOfStory())
         {
@@ -78,12 +78,17 @@ public class MovieGameItemManager
         }
 
         // 2. 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
+        if(mUserSelectNextfileName == null)
+        {
+            // TODO: 우선은 첫번째 영상으로.. 정책을 정해야 할듯..
+            mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
+        }
 
         // 3. 기존 UI 삭제
         mMainActivity.removeButtonLayout();
 
         // 4. 다음 재생 영상 셋팅하기
-        makeMovieGameItemAndSetUriAuth( getNextMovieGameItem() );
+        makeMovieGameItemAndSetUriAuth( mUserSelectNextfileName );
     }
 
     public void update()
@@ -104,10 +109,10 @@ public class MovieGameItemManager
         switch (v.getId())
         {
             case R.id.button_01:
-                Log.i("Button", "01Click1");
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
                 break;
             case R.id.button_02:
-                Log.i("Button", "01Click2");
+                mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 2);
                 break;
             default:
                 break;
@@ -121,14 +126,9 @@ public class MovieGameItemManager
     }
 
     // 다음에 재생할 영상 가져오기
-    private String getNextMovieGameItem()
+    private String getNextMovieGameItem(String curFilename, int iNextIndex)
     {
-        // TODO: getNextMovieGameItem
-
-
-
-        String nextMovieGameItem = "Chapter_02";
-        return nextMovieGameItem;
+        return mDbManager.getNextfileFromFilename(curFilename, iNextIndex);
     }
 
     private void makeMovieGameItemAndSetUriAuth(String nextFileName)
