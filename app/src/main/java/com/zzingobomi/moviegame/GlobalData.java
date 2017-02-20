@@ -6,6 +6,13 @@ package com.zzingobomi.moviegame;
  */
 
 /**
+ * 종료시 자원 정리는 어떻게 할 것인가.
+ * 다시 게임을 할때는 어떻게 처리할 것인가. SharedPrefabs 를 이용해서 처리할 것인가.
+ * 중간에 게임을 Hide 시키거나 전화가 왔을때, 게임을 껐을때는 어떻게 처리할 것인가.
+ * 이것도 SharedPrefabs 를 이용해서 처리?
+ */
+
+/**
  * 화면에 보여주는 방식은 처음에는 MainActivity 에서 하나의 VideoView 로 보여주자.
  * 후에 가능하다면 더블 퍼버링 방식으로 FragmentActivity 를 이용해서 번갈아가며 보여주기 방식
  * 으로 개선 가능하다면 개선

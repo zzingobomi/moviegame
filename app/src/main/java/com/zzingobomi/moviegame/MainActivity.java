@@ -193,5 +193,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     {
         // 자원 정리
         // TODO:
+
+        finish();
     }
 }
