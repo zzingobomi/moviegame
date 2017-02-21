@@ -112,6 +112,15 @@ public class MainActivity extends Activity implements View.OnClickListener
             btn1.setOnClickListener(this);
             Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_2_2);
             btn2.setOnClickListener(this);
+
+            // 버튼의 배경과 글씨를 없앤다.
+            if(!GlobalData.debugMode)
+            {
+                btn1.setText("");
+                btn1.setBackgroundColor(0x00000000);
+                btn2.setText("");
+                btn2.setBackgroundColor(0x00000000);
+            }
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_3)
         {
@@ -124,6 +133,17 @@ public class MainActivity extends Activity implements View.OnClickListener
             btn2.setOnClickListener(this);
             Button btn3 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_3);
             btn3.setOnClickListener(this);
+
+            // 버튼의 배경과 글씨를 없앤다.
+            if(!GlobalData.debugMode)
+            {
+                btn1.setText("");
+                btn1.setBackgroundColor(0x00000000);
+                btn2.setText("");
+                btn2.setBackgroundColor(0x00000000);
+                btn3.setText("");
+                btn3.setBackgroundColor(0x00000000);
+            }
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_4)
         {
@@ -138,6 +158,19 @@ public class MainActivity extends Activity implements View.OnClickListener
             btn3.setOnClickListener(this);
             Button btn4 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_4);
             btn4.setOnClickListener(this);
+
+            // 버튼의 배경과 글씨를 없앤다.
+            if(!GlobalData.debugMode)
+            {
+                btn1.setText("");
+                btn1.setBackgroundColor(0x00000000);
+                btn2.setText("");
+                btn2.setBackgroundColor(0x00000000);
+                btn3.setText("");
+                btn3.setBackgroundColor(0x00000000);
+                btn4.setText("");
+                btn4.setBackgroundColor(0x00000000);
+            }
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_C_4)
         {
@@ -255,6 +288,12 @@ public class MainActivity extends Activity implements View.OnClickListener
                 });
         AlertDialog alert = secondPopup.create();
         alert.show();
+    }
+
+    // 에뮬레이터인지 실제 단말인지 구분 (안드로이드의 신 책 참조)
+    private boolean isRealPhone()
+    {
+        return false;
     }
 
     // 네트워크에 연결되어 있는 상태인가

@@ -20,7 +20,7 @@ package com.zzingobomi.moviegame;
 /**
  * 중간에 게임을 Hide 시키거나 전화가 왔을때, 게임을 껐을때는 어떻게 처리할 것인가.
  * 이것도 SharedPrefabs 를 이용해서 처리?
- * 지금은 백그라운드로 내렸다가 다시 올라왔을때 Chapter_01 부터 시작하는거 같음
+ * 지금은 백그라운드로 내렸다가 다시 올라왔을때 해당 영상의 처음부터 시작
  */
 
 /**
@@ -29,8 +29,7 @@ package com.zzingobomi.moviegame;
  */
 
 /**
- * 모바일 데이터일 경우 경고 팝업 2번 띄워주기
- *
+ * 에뮬에서 실행인지 실제 단말에서 실행인지 구분하는 코드 (안드로이드의 신 참조)
  */
 
 /**
@@ -48,6 +47,11 @@ package com.zzingobomi.moviegame;
 public class GlobalData
 {
     ///
+    /// Debug 관련
+    ///
+    public static final boolean debugMode       = true;
+
+    ///
     /// 접속 관련
     ///
     public static final String schema           = "http";
@@ -57,7 +61,6 @@ public class GlobalData
     public static final String pw               = "info3775";
     public static final String dir              = "testvideo";
     public static final String fileExten        = ".mp4";
-    //public static final String fileName       = "testvideo2.mp4";
 
     ///
     /// DB 관련
