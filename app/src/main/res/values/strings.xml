@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">moviegame</string>
+    <string name="confirm_button">확인</string>
+    <string name="cancel_button">취소</string>
+    <string name="noconnect_networkpopup_title"></string>
+    <string name="noconnect_networkpopup_content">네트워크를 연결하고 오십시오.</string>
+    <string name="first_networkconfirm_title"></string>
+    <string name="first_networkconfirm_content">모바일 데이터로 게임을 하시겠습니까?</string>
+    <string name="second_networkconfirm_title"></string>
+    <string name="second_networkconfirm_content">정말 모바일 데이터로 게임을 하시겠습니까?\n데이터 요금이 부과될 수 있습니다.</string>
 </resources>

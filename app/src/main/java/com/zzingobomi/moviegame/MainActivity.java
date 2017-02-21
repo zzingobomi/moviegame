@@ -225,7 +225,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     private void openNoNetworkConnectPopup()
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setPositiveButton("확인", new DialogInterface.OnClickListener()
+        alert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialog, int which)
@@ -234,13 +234,13 @@ public class MainActivity extends Activity implements View.OnClickListener
                 GameEnd();
             }
         });
-        alert.setMessage("네트워크를 연결하고 오십시오");
+        alert.setMessage(R.string.noconnect_networkpopup_content);
         alert.show();
     }
     private void openFirstWiFiConnectPopup()
     {
         AlertDialog.Builder firstPopup = new AlertDialog.Builder(this);
-        firstPopup.setMessage("모바일 데이터로 게임을 하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+        firstPopup.setMessage(R.string.first_networkconfirm_content).setCancelable(false).setPositiveButton(R.string.confirm_button,
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -250,7 +250,7 @@ public class MainActivity extends Activity implements View.OnClickListener
                         dialog.dismiss();
                         openSecondWiFiConnectPopup();
                     }
-                }).setNegativeButton("취소",
+                }).setNegativeButton(R.string.cancel_button,
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -266,7 +266,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     private void openSecondWiFiConnectPopup()
     {
         AlertDialog.Builder secondPopup = new AlertDialog.Builder(this);
-        secondPopup.setMessage("정말 모바일 데이터로 게임을 하시겠습니까? 데이터 요금이 부과될 수 있습니다.").setCancelable(false).setPositiveButton("확인",
+        secondPopup.setMessage(R.string.second_networkconfirm_content).setCancelable(false).setPositiveButton(R.string.confirm_button,
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -276,7 +276,7 @@ public class MainActivity extends Activity implements View.OnClickListener
                         dialog.dismiss();
                         StartGame();
                     }
-                }).setNegativeButton("취소",
+                }).setNegativeButton(R.string.cancel_button,
                 new DialogInterface.OnClickListener()
                 {
                     @Override
