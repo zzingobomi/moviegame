@@ -2,7 +2,9 @@ package com.zzingobomi.moviegame;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -46,6 +48,13 @@ public class MainActivity extends Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // 네트워크 타입 체크
+        CheckNetwork();
+    }
+
+    private void StartGame()
+    {
         setContentView(R.layout.activity_main);
 
         // 레이아웃 위젯
@@ -138,14 +147,6 @@ public class MainActivity extends Activity implements View.OnClickListener
         {
             Log.e("addButtonLayout", "addButtonLayout type error");
         }
-
-        // TestCode
-        //FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
-        //LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
-        //frameLayout.addView(li);
-
-        //Toast.makeText(getApplicationContext(), "Make Button UI Time~~~", Toast.LENGTH_LONG).show();
     }
     public void removeButtonLayout()
     {
@@ -161,6 +162,101 @@ public class MainActivity extends Activity implements View.OnClickListener
     ///
     /// 네트워크 관련
     ///
+    // 네트워크 타입에 따라 와이파이 유도
+    private void CheckNetwork()
+    {
+        //  1. 네트워크에 연결되어 있는가
+        boolean bConnectNetwork = isConnected();
+        if(bConnectNetwork)
+        {
+            // 2. 모바일인지 WI-Fi 인지
+            int iNetType = getNetworkType();
+            if(iNetType == ConnectivityManager.TYPE_WIFI)
+            {
+                // 정상적인 게임 시작
+                StartGame();
+            }
+            else
+            {
+                // 3. WI-Fi 접속 유도 팝업 띄우기
+                openFirstWiFiConnectPopup();
+            }
+        }
+        else
+        {
+            // 네트워크에 연결되어 있지 않다고 확인창 띄워준후 종료
+            openNoNetworkConnectPopup();
+        }
+    }
+
+    private void openNoNetworkConnectPopup()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                GameEnd();
+            }
+        });
+        alert.setMessage("네트워크를 연결하고 오십시오");
+        alert.show();
+    }
+    private void openFirstWiFiConnectPopup()
+    {
+        AlertDialog.Builder firstPopup = new AlertDialog.Builder(this);
+        firstPopup.setMessage("모바일 데이터로 게임을 하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // 두번째 팝업창 띄워주기
+                        dialog.dismiss();
+                        openSecondWiFiConnectPopup();
+                    }
+                }).setNegativeButton("취소",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                        GameEnd();
+                    }
+                });
+        AlertDialog alert = firstPopup.create();
+        alert.show();
+    }
+    private void openSecondWiFiConnectPopup()
+    {
+        AlertDialog.Builder secondPopup = new AlertDialog.Builder(this);
+        secondPopup.setMessage("정말 모바일 데이터로 게임을 하시겠습니까? 데이터 요금이 부과될 수 있습니다.").setCancelable(false).setPositiveButton("확인",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // 게임 시작
+                        dialog.dismiss();
+                        StartGame();
+                    }
+                }).setNegativeButton("취소",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                        GameEnd();
+                    }
+                });
+        AlertDialog alert = secondPopup.create();
+        alert.show();
+    }
+
     // 네트워크에 연결되어 있는 상태인가
     private boolean isConnected()
     {

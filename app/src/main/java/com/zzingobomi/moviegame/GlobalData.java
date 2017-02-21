@@ -6,12 +6,31 @@ package com.zzingobomi.moviegame;
  */
 
 /**
- * 모바일 데이터일 경우 경고 팝업 2번 띄워주기
- * PowerManager(이건 알림에서 쓰는거 같고..) 유저 입력이 없더라도 화면 끄지 않기 Manifest Permission FLAG_KEEP_SCREEN_ON, WAKE_LOCK
+ * 핸드폰 전원 꺼짐 관련
+ * PowerManager(이건 알림에서 쓰는거 같고..)
+ * 유저 입력이 없더라도 화면 끄지 않기 Manifest Permission FLAG_KEEP_SCREEN_ON, WAKE_LOCK
+ * VideoView 재생중에는 꺼지지 않는거 같음.. 좀 더 긴 영상으로 실험 필요 but 일시 정지 중에는 꺼짐
+ */
+
+/**
+ * 핸드폰 꺼질때 크래시 남 - 마지막 영상이면 return 함으로서 해결.
  * 종료시 자원 정리는 어떻게 할 것인가. (안드로이드 게임 프로그래밍 참고?)
- * 다시 게임을 할때는 어떻게 처리할 것인가. SharedPrefabs 를 이용해서 처리할 것인가.
+ */
+
+/**
  * 중간에 게임을 Hide 시키거나 전화가 왔을때, 게임을 껐을때는 어떻게 처리할 것인가.
  * 이것도 SharedPrefabs 를 이용해서 처리?
+ * 지금은 백그라운드로 내렸다가 다시 올라왔을때 Chapter_01 부터 시작하는거 같음
+ */
+
+/**
+ * 다시 게임을 할때는 어떻게 처리할 것인가. SharedPrefabs 를 이용해서 처리할 것인가.
+ * 즉 아예 유저가 한번 플레이를 했을 경우는 어떻게 처리?
+ */
+
+/**
+ * 모바일 데이터일 경우 경고 팝업 2번 띄워주기
+ *
  */
 
 /**

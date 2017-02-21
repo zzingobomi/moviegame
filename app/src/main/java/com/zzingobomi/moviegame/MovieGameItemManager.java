@@ -75,6 +75,7 @@ public class MovieGameItemManager
         if(mCurMovieGameItem.isEndOfStory())
         {
             gameEndManager();
+            return;
         }
 
         // 2. 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
