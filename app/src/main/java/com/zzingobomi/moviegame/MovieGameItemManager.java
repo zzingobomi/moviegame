@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.VideoView;
 
@@ -26,6 +27,7 @@ public class MovieGameItemManager
     private MovieGameItem   mCurMovieGameItem   = null;
 
     private String          mUserSelectNextfileName = null;
+    private boolean         mUserNotSelectPause = false;
 
     public MovieGameItemManager(Context aContext, MainActivity aActivity, VideoView aVideoView, DBManager aDbManager)
     {
@@ -81,8 +83,11 @@ public class MovieGameItemManager
         // 2. 유저가 선택한 버튼(영상) 확인 ( 만약 없다면? )
         if(mUserSelectNextfileName == null)
         {
-            // TODO: 우선은 첫번째 영상으로.. 정책을 정해야 할듯..
-            mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
+            mUserNotSelectPause = true;
+            return;
+
+            // 첫번째 영상 재생 방식... 어떤게 더 나을지?
+            //mUserSelectNextfileName = getNextMovieGameItem(mCurMovieGameItem.getFileName(), 1);
         }
 
         // 3. 기존 UI 삭제
@@ -143,7 +148,25 @@ public class MovieGameItemManager
                 break;
 
             default:
-                break;
+                Log.e("ERROR", "Button Type Error");
+                return;
+        }
+
+        // 유저가 선택했는지 안했는지 확인
+        checkNotUserSelect();
+    }
+
+    private void checkNotUserSelect()
+    {
+        if(mUserNotSelectPause)
+        {
+            mUserNotSelectPause = false;
+
+            // 기존 UI 삭제
+            mMainActivity.removeButtonLayout();
+
+            // 다음 영상 재생하기
+            makeMovieGameItemAndSetUriAuth( mUserSelectNextfileName );
         }
     }
 
