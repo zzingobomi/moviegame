@@ -3,21 +3,39 @@ package com.zzingobomi.moviegame;
 /**
  * Created by JongChan on 2017-02-13.
  * MovieGame 의 모든 전역 설정 및 변수들을 여기에 선언합니다.
- * 1. 동영상 FullScreen 재생
- *android:theme="@android:style/Theme.NoTitleBar.Fullscreen
- * style/AppTheme
+ */
+
+/**
+ * 핸드폰 전원 꺼짐 관련
+ * PowerManager(이건 알림에서 쓰는거 같고..)
+ * 유저 입력이 없더라도 화면 끄지 않기 Manifest Permission FLAG_KEEP_SCREEN_ON, WAKE_LOCK
+ * VideoView 재생중에는 꺼지지 않는거 같음.. 좀 더 긴 영상으로 실험 필요 but 일시 정지 중에는 꺼짐
+ */
+
+/**
+ * 핸드폰 꺼질때 크래시 남 - 마지막 영상이면 return 함으로서 해결.
+ * 종료시 자원 정리는 어떻게 할 것인가. (안드로이드 게임 프로그래밍 참고?)
+ */
+
+/**
+ * 중간에 게임을 Hide 시키거나 전화가 왔을때, 게임을 껐을때는 어떻게 처리할 것인가.
+ * 이것도 SharedPrefabs 를 이용해서 처리?
+ * 지금은 백그라운드로 내렸다가 다시 올라왔을때 해당 영상의 처음부터 시작
+ */
+
+/**
+ * 다시 게임을 할때는 어떻게 처리할 것인가. SharedPrefabs 를 이용해서 처리할 것인가.
+ * 즉 아예 유저가 한번 플레이를 했을 경우는 어떻게 처리?
+ */
+
+/**
+ * 에뮬에서 실행인지 실제 단말에서 실행인지 구분하는 코드 (안드로이드의 신 참조)
  */
 
 /**
  * 화면에 보여주는 방식은 처음에는 MainActivity 에서 하나의 VideoView 로 보여주자.
  * 후에 가능하다면 더블 퍼버링 방식으로 FragmentActivity 를 이용해서 번갈아가며 보여주기 방식
  * 으로 개선 가능하다면 개선
- */
-
- /**
- * NextFile 방식은 LocalData 방식
- * SQLite 를 이용해서 DB 에다가 정보를 저장하고 여기서 읽어오는게 좋을듯 ( SQLIte 를 좀 연구 ) DB 구조 짜야함
-  * Index, FileName, BtnType, Next1, Next2, Next3, Next4
  */
 
 /**
@@ -29,6 +47,11 @@ package com.zzingobomi.moviegame;
 public class GlobalData
 {
     ///
+    /// Debug 관련
+    ///
+    public static final boolean debugMode       = true;
+
+    ///
     /// 접속 관련
     ///
     public static final String schema           = "http";
@@ -38,7 +61,6 @@ public class GlobalData
     public static final String pw               = "info3775";
     public static final String dir              = "testvideo";
     public static final String fileExten        = ".mp4";
-    //public static final String fileName       = "testvideo2.mp4";
 
     ///
     /// DB 관련

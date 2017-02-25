@@ -2,7 +2,9 @@ package com.zzingobomi.moviegame;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -46,6 +48,13 @@ public class MainActivity extends Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // 네트워크 타입 체크
+        CheckNetwork();
+    }
+
+    private void StartGame()
+    {
         setContentView(R.layout.activity_main);
 
         // 레이아웃 위젯
@@ -99,35 +108,78 @@ public class MainActivity extends Activity implements View.OnClickListener
             mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
             mMainFrameLayout.addView(mCurButtonLyaout);
 
-            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_01);
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_2_1);
             btn1.setOnClickListener(this);
-            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_02);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_2_2);
             btn2.setOnClickListener(this);
+
+            // 버튼의 배경과 글씨를 없앤다.
+            if(!GlobalData.debugMode)
+            {
+                btn1.setText("");
+                btn1.setBackgroundColor(0x00000000);
+                btn2.setText("");
+                btn2.setBackgroundColor(0x00000000);
+            }
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_3)
         {
-            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_3, null);
+            mMainFrameLayout.addView(mCurButtonLyaout);
+
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_1);
+            btn1.setOnClickListener(this);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_2);
+            btn2.setOnClickListener(this);
+            Button btn3 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_3_3);
+            btn3.setOnClickListener(this);
+
+            // 버튼의 배경과 글씨를 없앤다.
+            if(!GlobalData.debugMode)
+            {
+                btn1.setText("");
+                btn1.setBackgroundColor(0x00000000);
+                btn2.setText("");
+                btn2.setBackgroundColor(0x00000000);
+                btn3.setText("");
+                btn3.setBackgroundColor(0x00000000);
+            }
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_H_4)
         {
-            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            mCurButtonLyaout = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_4, null);
+            mMainFrameLayout.addView(mCurButtonLyaout);
+
+            Button btn1 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_1);
+            btn1.setOnClickListener(this);
+            Button btn2 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_2);
+            btn2.setOnClickListener(this);
+            Button btn3 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_3);
+            btn3.setOnClickListener(this);
+            Button btn4 = (Button)mCurButtonLyaout.findViewById(R.id.button_h_4_4);
+            btn4.setOnClickListener(this);
+
+            // 버튼의 배경과 글씨를 없앤다.
+            if(!GlobalData.debugMode)
+            {
+                btn1.setText("");
+                btn1.setBackgroundColor(0x00000000);
+                btn2.setText("");
+                btn2.setBackgroundColor(0x00000000);
+                btn3.setText("");
+                btn3.setBackgroundColor(0x00000000);
+                btn4.setText("");
+                btn4.setBackgroundColor(0x00000000);
+            }
         }
         else if(btnType == GlobalData.BUTTON_TYPE.BT_C_4)
         {
-            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_h_2, null);
+            //LinearLayout li = (LinearLayout)mMainLayoutInflater.inflate(R.layout.buttontype_C_4, null);
         }
         else
         {
             Log.e("addButtonLayout", "addButtonLayout type error");
         }
-
-        // TestCode
-        //FrameLayout frameLayout = (FrameLayout)this.findViewById(R.id.framelayout_main);
-        //LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //LinearLayout li = (LinearLayout)inflater.inflate(R.layout.buttontype_h_2, null);
-        //frameLayout.addView(li);
-
-        //Toast.makeText(getApplicationContext(), "Make Button UI Time~~~", Toast.LENGTH_LONG).show();
     }
     public void removeButtonLayout()
     {
@@ -138,25 +190,112 @@ public class MainActivity extends Activity implements View.OnClickListener
     public void onClick(View v)
     {
         mMovieGameItemManager.onClickButton(v);
-
-        /*
-        switch (v.getId())
-        {
-            case R.id.button_01:
-                Log.i("Button", "01Click1");
-                break;
-            case R.id.button_02:
-                Log.i("Button", "01Click2");
-                break;
-            default:
-                break;
-        }
-        */
     }
 
     ///
     /// 네트워크 관련
     ///
+    // 네트워크 타입에 따라 와이파이 유도
+    private void CheckNetwork()
+    {
+        //  1. 네트워크에 연결되어 있는가
+        boolean bConnectNetwork = isConnected();
+        if(bConnectNetwork)
+        {
+            // 2. 모바일인지 WI-Fi 인지
+            int iNetType = getNetworkType();
+            if(iNetType == ConnectivityManager.TYPE_WIFI)
+            {
+                // 정상적인 게임 시작
+                StartGame();
+            }
+            else
+            {
+                // 3. WI-Fi 접속 유도 팝업 띄우기
+                openFirstWiFiConnectPopup();
+            }
+        }
+        else
+        {
+            // 네트워크에 연결되어 있지 않다고 확인창 띄워준후 종료
+            openNoNetworkConnectPopup();
+        }
+    }
+
+    private void openNoNetworkConnectPopup()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                GameEnd();
+            }
+        });
+        alert.setMessage(R.string.noconnect_networkpopup_content);
+        alert.show();
+    }
+    private void openFirstWiFiConnectPopup()
+    {
+        AlertDialog.Builder firstPopup = new AlertDialog.Builder(this);
+        firstPopup.setMessage(R.string.first_networkconfirm_content).setCancelable(false).setPositiveButton(R.string.confirm_button,
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // 두번째 팝업창 띄워주기
+                        dialog.dismiss();
+                        openSecondWiFiConnectPopup();
+                    }
+                }).setNegativeButton(R.string.cancel_button,
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                        GameEnd();
+                    }
+                });
+        AlertDialog alert = firstPopup.create();
+        alert.show();
+    }
+    private void openSecondWiFiConnectPopup()
+    {
+        AlertDialog.Builder secondPopup = new AlertDialog.Builder(this);
+        secondPopup.setMessage(R.string.second_networkconfirm_content).setCancelable(false).setPositiveButton(R.string.confirm_button,
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // 게임 시작
+                        dialog.dismiss();
+                        StartGame();
+                    }
+                }).setNegativeButton(R.string.cancel_button,
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                        GameEnd();
+                    }
+                });
+        AlertDialog alert = secondPopup.create();
+        alert.show();
+    }
+
+    // 에뮬레이터인지 실제 단말인지 구분 (안드로이드의 신 책 참조)
+    private boolean isRealPhone()
+    {
+        return false;
+    }
+
     // 네트워크에 연결되어 있는 상태인가
     private boolean isConnected()
     {
@@ -189,5 +328,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     {
         // 자원 정리
         // TODO:
+
+        finish();
     }
 }
