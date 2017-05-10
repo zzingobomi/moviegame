@@ -1,5 +1,6 @@
 package com.zzingobomi.moviegame;
 
+// Git 을 다시 테스트 해 봅시다
 
 import android.app.Activity;
 import android.app.AlertDialog;
